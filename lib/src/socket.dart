@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -49,7 +50,6 @@ class PhoenixSocket {
   PhoenixSocket(
     /// The URL of the Phoenix server.
     String endpoint, {
-
     /// The options used when initiating and maintaining the
     /// websocket connection.
     PhoenixSocketOptions? socketOptions,
@@ -97,7 +97,7 @@ class PhoenixSocket {
 
   SocketState _socketState;
 
-  WebSocketChannel? _ws;
+  IOWebSocketChannel? _ws;
 
   _StreamRouter<Message>? _router;
 
@@ -189,7 +189,7 @@ class PhoenixSocket {
     final completer = Completer<PhoenixSocket?>();
 
     try {
-      _ws = WebSocketChannel.connect(_mountPoint);
+      _ws = IOWebSocketChannel.connect(_mountPoint, headers: _options.headers);
       _ws!.stream
           .where(_shouldPipeMessage)
           .listen(_onSocketData, cancelOnError: true)

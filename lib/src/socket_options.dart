@@ -9,6 +9,8 @@ import 'message_serializer.dart';
 class PhoenixSocketOptions {
   /// Create a PhoenixSocketOptions
   PhoenixSocketOptions({
+    this.headers,
+
     /// The duration after which a connection attempt
     /// is considered failed
     Duration? timeout,
@@ -65,6 +67,8 @@ class PhoenixSocketOptions {
   /// Parameters sent to your Phoenix backend on connection.
   /// Use [dynamicParams] if your params are dynamic.
   final Map<String, String>? params;
+
+  Map<String, String>? headers;
 
   /// Will be called to get fresh params before each connection attempt.
   final Future<Map<String, String>> Function()? dynamicParams;
