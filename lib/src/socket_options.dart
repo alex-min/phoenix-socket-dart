@@ -66,15 +66,15 @@ class PhoenixSocketOptions {
 
   /// Parameters sent to your Phoenix backend on connection.
   /// Use [dynamicParams] if your params are dynamic.
-  final Map<String, String>? params;
+  final Map<String, dynamic>? params;
 
   Map<String, String>? headers;
 
   /// Will be called to get fresh params before each connection attempt.
-  final Future<Map<String, String>> Function()? dynamicParams;
+  final Future<Map<String, dynamic>> Function()? dynamicParams;
 
   /// Get connection params.
-  Future<Map<String, String>> getParams() async {
+  Future<Map<String, dynamic>> getParams() async {
     final res = dynamicParams != null ? await dynamicParams!() : params ?? {};
     return {
       ...res,

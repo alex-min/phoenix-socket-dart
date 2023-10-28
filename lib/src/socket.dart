@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:math';
 
+import 'package:http_query_string/http_query_string.dart' as queryString;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
@@ -394,7 +395,10 @@ class PhoenixSocket {
       String endpoint, PhoenixSocketOptions options) async {
     var decodedUri = Uri.parse(endpoint);
     final params = await options.getParams();
-    final queryParams = decodedUri.queryParameters.entries.toList()
+    final queryParams = queryString.Decoder()
+        .convert(decodedUri.query)
+        .entries
+        .toList()
       ..addAll(params.entries.toList());
     return decodedUri.replace(
       queryParameters: Map.fromEntries(queryParams),
