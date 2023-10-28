@@ -401,8 +401,7 @@ class PhoenixSocket {
         .toList()
       ..addAll(params.entries.toList());
     return decodedUri.replace(
-      queryParameters: Map.fromEntries(queryParams),
-    );
+        query: queryString.Encoder().convert(Map.fromEntries(queryParams)));
   }
 
   void _startHeartbeat() {
